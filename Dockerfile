@@ -1,14 +1,7 @@
-FROM openjdk:8-jdk-slim
-ENV PORT 8080
-ENV CLASSPATH /opt/lib
+From tomcat:8.0.51-jre8-alpine
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY ./target/SmithdrugServices-0.0.1.war /usr/local/tomcat/webapps/ROOT.war
+CMD ["catalina.sh","run"]
+
+# Make port 8080 available to the world outside this container
 EXPOSE 8080
-
-# copy pom.xml and wildcards to avoid this command failing if there's no target/lib directory
-COPY pom.xml target/lib* /opt/lib/
-
-# NOTE we assume there's only 1 jar in the target dir
-# but at least this means we don't have to guess the name
-# we could do with a better way to know the name - or to always create an app.jar or something
-COPY target/*.jar /opt/app.jar
-WORKDIR /opt
-CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-jar", "app.jar"]
