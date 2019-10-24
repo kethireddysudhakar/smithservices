@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: kethireddysudhakarsmithservices 
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kethireddysudhakarsmithservices 
+    spec:
+      containers:
+        - name: kethireddysudhakarsmithservices 
+          image: javakubeappacr.azurecr.io/kethireddysudhakarsmithservices
+          ports:
+          - containerPort: 8080
